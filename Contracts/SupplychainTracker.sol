@@ -4,6 +4,15 @@ pragma solidity ^0.8.24;
 
 contract SupplychainTracker{
 
+    enum ProductStatus {
+        Manufactured,
+        Shipped,
+        AtDistributor,
+        AtRetailStore,
+        Sold,
+        Delivered
+    }
+
     struct Participant {
         string companyName;
         address wallet;
@@ -16,10 +25,17 @@ contract SupplychainTracker{
         uint256 id;
         string description;
         string manufacturer;
+        address currentOwner;
+        ProductStatus status;
     }
 
-    Product[] public listOfProducts;
+    struct OwnershipRecord {
+        address previousOwner;
+        address newOwner; 
+    }
 
+    mapping(uint => Product) public listOfProducts;
+    mapping(uint => OwnershipRecord[]) ownershipHistory;
     mapping(address => Participant) public manufacturers;
     mapping(address => Participant) public distributors;
 
@@ -46,8 +62,25 @@ contract SupplychainTracker{
 
     //Product creation only by manufacturers
     function createProduct(string memory name, uint256 id, string memory description, string memory manufacturer) public onlyManufacturer {
-        listOfProducts.push(Product(name, id, description, manufacturer));
+        listOfProducts[id] = Product(name, id, description, manufacturer, msg.sender, ProductStatus.Manufactured);
     }
+
+    //Change of ownership of product
+    function transferOfOwnership(uint id, address newOwner, ProductStatus newStatus) public {
+        require(msg.sender == listOfProducts[id].currentOwner, "Not current owner");
+        require(newOwner != msg.sender, "Already the owner");
+
+        address oldOwner = listOfProducts[id].currentOwner;
+        listOfProducts[id].currentOwner = newOwner;
+        listOfProducts[id].status = newStatus;
+   
+        ownershipHistory[id].push(OwnershipRecord(oldOwner, newOwner));
+    }
+
+    //Product history check
+    function retriveOwnershipHistory(uint id) public view returns (OwnershipRecord[] memory) {
+        return ownershipHistory[id];
+    } 
         
     
 }
