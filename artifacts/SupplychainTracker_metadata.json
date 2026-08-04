@@ -41,6 +41,35 @@
 						"type": "address"
 					}
 				],
+				"name": "customers",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "customerName",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "wallet",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
 				"name": "distributors",
 				"outputs": [
 					{
@@ -149,6 +178,19 @@
 				"inputs": [
 					{
 						"internalType": "string",
+						"name": "customerName",
+						"type": "string"
+					}
+				],
+				"name": "registerCustomer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
 						"name": "companyName",
 						"type": "string"
 					},
@@ -179,6 +221,58 @@
 				"name": "registerManufacturer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "companyName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "registrationNumber",
+						"type": "uint256"
+					}
+				],
+				"name": "registerRetailer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "retailers",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "companyName",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "wallet",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "registrationNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -264,11 +358,11 @@
 	},
 	"sources": {
 		"Contracts/SupplychainTracker.sol": {
-			"keccak256": "0x08bbda935fe3bfa9d2a169ddbfc56461d6376dd14f159b17b129f1a55d9e210c",
+			"keccak256": "0x9400891dd443c584e5cf20741a5496c3a7aab60b148845c0818a313b7166e818",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cbb9949f83a0d5502a7fdf4e1c0ba5ff27cef0836d0699e1f29d96ca5baf023b",
-				"dweb:/ipfs/QmT48wdJw2MUiQNwgaRNUs3ScjTs48Mg31Bfpuf3QvNDBh"
+				"bzz-raw://4384b3b1cf258b13cc08d5f8bfcd946fbbb9b786e2a5b3ee080265611d4da43b",
+				"dweb:/ipfs/Qmd8JQXVQhWFY7tRXi6z52VYtHgBQbToGLucu643aVu8Bu"
 			]
 		}
 	},

@@ -20,6 +20,12 @@ contract SupplychainTracker{
         bool isRegistered;
     }
 
+    struct Customer {
+        string customerName;
+        address wallet;
+        bool isRegistered;
+    }
+
     struct Product {
         string name;
         uint256 id;
@@ -38,6 +44,8 @@ contract SupplychainTracker{
     mapping(uint => OwnershipRecord[]) ownershipHistory;
     mapping(address => Participant) public manufacturers;
     mapping(address => Participant) public distributors;
+    mapping(address => Participant) public retailers;
+    mapping(address => Customer) public customers;
 
 
     //Only registered manufactures can create an product.
@@ -60,6 +68,18 @@ contract SupplychainTracker{
         distributors[msg.sender] = Participant(companyName, msg.sender, registrationNumber, true);
     }
 
+    //Registration of retailor
+    function registerRetailer(string memory companyName, uint256 registrationNumber) public {
+        require(!retailers[msg.sender].isRegistered, "Already registered");
+        retailers[msg.sender] = Participant(companyName, msg.sender, registrationNumber, true);
+    } 
+
+    //Customer registration
+    function registerCustomer(string memory customerName) public {
+        require(!customers[msg.sender].isRegistered, "Already registered");
+        customers[msg.sender] = Customer(customerName, msg.sender, true);
+    }
+
     //Product creation only by manufacturers
     function createProduct(string memory name, uint256 id, string memory description, string memory manufacturer) public onlyManufacturer {
         listOfProducts[id] = Product(name, id, description, manufacturer, msg.sender, ProductStatus.Manufactured);
@@ -80,7 +100,6 @@ contract SupplychainTracker{
     //Product history check
     function retriveOwnershipHistory(uint id) public view returns (OwnershipRecord[] memory) {
         return ownershipHistory[id];
-    } 
-        
+    }      
     
 }
